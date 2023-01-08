@@ -113,7 +113,7 @@ export class Scrambler extends Observer<Event> {
       };
     });
 
-    this.publish('change', {});
+    this.publish(Event.Scramble, {});
   };
 
   // private random: () => number;
