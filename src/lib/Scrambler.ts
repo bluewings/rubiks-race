@@ -1,21 +1,74 @@
 import seedrandom from 'seedrandom';
-import { NUMBER_OF_ROWS, NUMBER_OF_COLUMNS, Direction } from './constants';
+import { NUMBER_OF_ROWS, NUMBER_OF_COLUMNS, Direction, Color } from './constants';
 import { Tile, getTiles } from './Tile';
-import { GameBase } from './GameBase';
+// import { GameBase, } from './GameBase';
+
+// interface RubiksRaceOptions {
+//   numberOfColumns: number;
+//   numberOfRows: number;
+//   seed?: string;
+// }
+
+// const
+
+const numberOfRows = 3;
+const numberOfColumns = 3;
 
 interface RubiksRaceOptions {
-  numberOfColumns: number;
-  numberOfRows: number;
-  seed?: string;
+  // numberOfColumns: number;
+  // numberOfRows: number;
+  seed: string;
 }
 
 export class Scrambler {
+  spaces: {
+    x: number;
+    y: number;
+    color: Color;
+  }[];
   // numberOfRows: number;
   // numberOfColumns: number;
   // tiles: Tile[];
   // gameBase: GameBase;
+  private random: () => number;
+  constructor({ seed }: RubiksRaceOptions) {
+    this.random = seedrandom(seed);
 
-  constructor() {
+    const shuffle = (arr: any[], random: () => number) => {
+      return arr
+        .map((tile) => ({ tile, _: random() }))
+        .sort(({ _: a }, { _: b }) => a - b)
+        .map(({ tile }) => tile);
+    };
+
+    const colors = shuffle(
+      Object.values(Color)
+        .map((e) => {
+          return Array(4).fill(e);
+        })
+        .flat(),
+      this.random,
+    );
+
+    // console.log(colors);
+
+    // seedrandom();
+
+    // .array()
+
+    this.spaces = new Array(numberOfRows * numberOfColumns).fill(true).map((_, i) => {
+      // return null;
+      const y = Math.floor(i / numberOfColumns);
+      const x = i % numberOfColumns;
+
+      return {
+        y,
+        x,
+        color: colors.shift(),
+        // tile: _tiles.shift(),
+      };
+    });
+
     // this.numberOfRows = options?.numberOfRows || NUMBER_OF_ROWS;
     // this.numberOfColumns = options?.numberOfColumns || NUMBER_OF_COLUMNS;
     // this.random = seedrandom(options?.seed || Math.random().toString(36));

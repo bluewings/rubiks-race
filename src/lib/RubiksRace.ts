@@ -21,7 +21,9 @@ export class RubiksRace {
     this.numberOfRows = options?.numberOfRows || NUMBER_OF_ROWS;
     this.numberOfColumns = options?.numberOfColumns || NUMBER_OF_COLUMNS;
 
-    this.random = seedrandom(options?.seed || Math.random().toString(36));
+    const seed = options?.seed || Math.random().toString(36);
+
+    this.random = seedrandom(seed);
 
     this.tiles = getTiles(this.numberOfRows * this.numberOfColumns - 1, this.random);
 
@@ -31,7 +33,7 @@ export class RubiksRace {
       tiles: this.tiles,
     });
 
-    this.scrambler = new Scrambler();
+    this.scrambler = new Scrambler({ seed });
   }
 
   private random: () => number;

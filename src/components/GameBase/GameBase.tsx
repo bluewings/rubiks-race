@@ -3,6 +3,7 @@ import styles from './GameBase.module.scss';
 import Tile from '../Tile';
 import { RubiksRace } from '../../lib/RubiksRace';
 import { Direction } from '../../lib/constants';
+import Scrambler from '../Scrambler';
 
 interface IGameBaseProps {
   /**
@@ -136,8 +137,11 @@ function GameBase(props: IGameBaseProps) {
   return (
     <div className={styles.root}>
       {/* <input onKey/> */}
-      <h4>{tick}</h4>
+      <Scrambler spaces={game.scrambler.spaces} />
+      {/* <h4>{tick}</h4> */}
+      <hr />
       <button onClick={handleShuffleClick}>shuffle</button>
+      <hr />
       <div style={{ position: 'relative' }}>
         {game.tiles.map(({ id, color, x, y }) => (
           <Tile key={id} x={x} y={y} color={color} onPress={handleTileClick} />

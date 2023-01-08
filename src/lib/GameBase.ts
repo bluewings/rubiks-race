@@ -89,7 +89,7 @@ export class GameBase {
     // console.log('>>> 1')
     handle();
     // } else {
-    this._timer = setInterval(handle, 20);
+    this._timer = setInterval(handle, 50);
     // }
   };
 
