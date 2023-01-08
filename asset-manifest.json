@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/rubiks-race/static/css/main.06e4889c.css",
-    "main.js": "/rubiks-race/static/js/main.0905cd50.js",
+    "main.css": "/rubiks-race/static/css/main.0ec3e596.css",
+    "main.js": "/rubiks-race/static/js/main.dac1353d.js",
     "static/js/787.3ca01dc5.chunk.js": "/rubiks-race/static/js/787.3ca01dc5.chunk.js",
     "index.html": "/rubiks-race/index.html",
-    "main.06e4889c.css.map": "/rubiks-race/static/css/main.06e4889c.css.map",
-    "main.0905cd50.js.map": "/rubiks-race/static/js/main.0905cd50.js.map",
+    "main.0ec3e596.css.map": "/rubiks-race/static/css/main.0ec3e596.css.map",
+    "main.dac1353d.js.map": "/rubiks-race/static/js/main.dac1353d.js.map",
     "787.3ca01dc5.chunk.js.map": "/rubiks-race/static/js/787.3ca01dc5.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.06e4889c.css",
-    "static/js/main.0905cd50.js"
+    "static/css/main.0ec3e596.css",
+    "static/js/main.dac1353d.js"
   ]
 }
