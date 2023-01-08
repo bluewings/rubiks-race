@@ -1,16 +1,52 @@
 $size: 45px;
 .root {
   position: absolute;
-  background: #63e4c1;
+  // background: #63e4c1;
   // padding: 10px;
-  border: 1px solid black;
 
   width: $size;
   height: $size;
-  margin: 0.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  // margin: 0.5rem;
+  // border: 1px solid black;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
   transition: all 0.05s linear;
+
+  // border-style: solid;
+  // border-width: 1px 1px 4px 1px;
+  // border-color: #24a428;
+  // background-color: rgba(40, 142, 44);
+  // // background:     border-color: #24a428;;
+  border-radius: 4px;
+
   // display: inline-block;
+
+  // &:after {
+  //   content: '';
+  //   position: absolute;
+  //   width: 90%;
+  //   height: 60%;
+  //   top: 0;
+  //   left: 5%;
+  //   border-radius: 0.5em 0.5em 1em 1em / 0.5em 0.5em 2em 2em;
+  //   background-image: -webkit-gradient(
+  //     linear,
+  //     0% 0,
+  //     100% 0,
+  //     from(rgba(255, 255, 255, 0.55)),
+  //     to(rgba(255, 255, 255, 0.5)),
+  //     color-stop(0.5, rgba(255, 255, 255, 0)),
+  //     color-stop(0.8, rgba(255, 255, 255, 0))
+  //   );
+  //   background-image: gradient(
+  //     linear,
+  //     0% 0,
+  //     100% 0,
+  //     from(rgba(255, 255, 255, 0.55)),
+  //     to(rgba(255, 255, 255, 0.5)),
+  //     color-stop(0.5, rgba(255, 255, 255, 0)),
+  //     color-stop(0.8, rgba(255, 255, 255, 0))
+  //   );
+  // }
 }
