@@ -1,6 +1,7 @@
 import { Direction } from './constants';
 import { Tile } from './Tile';
 import { range, Observable, from } from 'rxjs';
+import { Observer } from './Observer';
 
 interface GameBaseOptions {
   numberOfColumns: number;
@@ -8,7 +9,99 @@ interface GameBaseOptions {
   tiles: Tile[];
 }
 
-export class GameBase {
+// class Observ {
+//   private observables: any[] = [];
+//   protected observer = (type: string, payload: any) => {
+//     this.observables.forEach((observer) => {
+//       observer.next({ type, payload });
+//     });
+//   };
+
+//   constructor() {
+//     // console.log();
+
+//     this.observable = new Observable((subscriber) => {
+//       this.observables.push(subscriber);
+//       return () => {
+//         const index = this.observables.indexOf(subscriber);
+//         if (index !== -1) {
+//           this.observables.splice(index, 1);
+//         }
+//       };
+//     });
+//   }
+
+//   private observable?: Observable<any>;
+
+//   public subscribe = (callback: Function) => {
+//     if (this.observable) {
+//       const subscription = this.observable.subscribe(() => {
+//         callback();
+//       });
+//       return () => {
+//         subscription.unsubscribe();
+//       };
+//       // this.observable
+//     }
+//     return () => {};
+
+//     // this.observable.subscribe(callback
+
+//     // this._resolves.push(callback);
+//     // return () => {
+//     //   this._resolves = this._resolves.filter((e) => e !== callback);
+//     // };
+//   };
+
+//   // initStream = () => {
+//   //   // const observables = [];
+//   //   // this.observer = (type, payload) => {
+//   //   //   observables.forEach((observer) => { observer.next({ type, payload }); });
+//   //   // };
+
+//   //   this.observable = new Observable((subscriber) => {
+//   //     this.observables.push(subscriber);
+//   //     return () => {
+//   //       const index = this.observables.indexOf(subscriber);
+//   //       if (index !== -1) {
+//   //         this.observables.splice(index, 1);
+//   //       }
+//   //     };
+//   //   });
+
+//   //   // from()
+
+//   //   // setTimeout(() => {
+//   //   //   this.observer('test', { greet: 'wow' });
+//   //   // }, 2000);
+
+//   //   // this.observable.subscribe((e) => {
+//   //   //   console.log(this.observables.length);
+//   //   //   console.log('subscribe', e);
+//   //   // });
+//   //   // const observable = new Observable((subscriber) => {
+//   //   //   subscriber.next(1);
+//   //   //   subscriber.next(2);
+//   //   //   subscriber.next(3);
+//   //   //   setTimeout(() => {
+//   //   //     subscriber.next(4);
+//   //   //     subscriber.complete();
+//   //   //   }, 1000);
+//   //   // });
+//   //   // Observable.
+//   //   // const stream =       Observable.create((observer) => {
+//   //   //   observables.push(observer);
+//   //   //   return () => {
+//   //   //     const index = observables.indexOf(observer);
+//   //   //     if (index > -1) {
+//   //   //       observables.splice(index, 1);
+//   //   //     }
+//   //   //   };
+//   //   // }),
+//   // };
+// }
+
+export class GameBase extends Observer {
   spaces: {
     x: number;
     y: number;
@@ -21,6 +114,7 @@ export class GameBase {
   numberOfColumns: number;
 
   constructor({ numberOfRows, numberOfColumns, tiles }: GameBaseOptions) {
+    super();
     this.numberOfRows = numberOfRows;
     this.numberOfColumns = numberOfColumns;
     const _tiles = tiles.slice();
@@ -36,64 +130,64 @@ export class GameBase {
     });
 
     this.syncPosition();
-    this.initStream();
+    // this.initStream();
   }
 
-  observables: any[] = [];
-  observer = (type: string, payload: any) => {
-    this.observables.forEach((observer) => {
-      observer.next({ type, payload });
-    });
-  };
+  // observables: any[] = [];
+  // observer = (type: string, payload: any) => {
+  //   this.observables.forEach((observer) => {
+  //     observer.next({ type, payload });
+  //   });
+  // };
 
-  observable?: Observable<any>;
+  // observable?: Observable<any>;
 
-  initStream = () => {
-    // const observables = [];
-    // this.observer = (type, payload) => {
-    //   observables.forEach((observer) => { observer.next({ type, payload }); });
-    // };
+  // initStream = () => {
+  //   // const observables = [];
+  //   // this.observer = (type, payload) => {
+  //   //   observables.forEach((observer) => { observer.next({ type, payload }); });
+  //   // };
 
-    this.observable = new Observable((subscriber) => {
-      this.observables.push(subscriber);
-      return () => {
-        const index = this.observables.indexOf(subscriber);
-        if (index !== -1) {
-          this.observables.splice(index, 1);
-        }
-      };
-    });
+  //   this.observable = new Observable((subscriber) => {
+  //     this.observables.push(subscriber);
+  //     return () => {
+  //       const index = this.observables.indexOf(subscriber);
+  //       if (index !== -1) {
+  //         this.observables.splice(index, 1);
+  //       }
+  //     };
+  //   });
 
-    // from()
+  //   // from()
 
-    // setTimeout(() => {
-    //   this.observer('test', { greet: 'wow' });
-    // }, 2000);
+  //   // setTimeout(() => {
+  //   //   this.observer('test', { greet: 'wow' });
+  //   // }, 2000);
 
-    // this.observable.subscribe((e) => {
-    //   console.log(this.observables.length);
-    //   console.log('subscribe', e);
-    // });
-    // const observable = new Observable((subscriber) => {
-    //   subscriber.next(1);
-    //   subscriber.next(2);
-    //   subscriber.next(3);
-    //   setTimeout(() => {
-    //     subscriber.next(4);
-    //     subscriber.complete();
-    //   }, 1000);
-    // });
-    // Observable.
-    // const stream =       Observable.create((observer) => {
-    //   observables.push(observer);
-    //   return () => {
-    //     const index = observables.indexOf(observer);
-    //     if (index > -1) {
-    //       observables.splice(index, 1);
-    //     }
-    //   };
-    // }),
-  };
+  //   // this.observable.subscribe((e) => {
+  //   //   console.log(this.observables.length);
+  //   //   console.log('subscribe', e);
+  //   // });
+  //   // const observable = new Observable((subscriber) => {
+  //   //   subscriber.next(1);
+  //   //   subscriber.next(2);
+  //   //   subscriber.next(3);
+  //   //   setTimeout(() => {
+  //   //     subscriber.next(4);
+  //   //     subscriber.complete();
+  //   //   }, 1000);
+  //   // });
+  //   // Observable.
+  //   // const stream =       Observable.create((observer) => {
+  //   //   observables.push(observer);
+  //   //   return () => {
+  //   //     const index = observables.indexOf(observer);
+  //   //     if (index > -1) {
+  //   //       observables.splice(index, 1);
+  //   //     }
+  //   //   };
+  //   // }),
+  // };
 
   syncPosition = () => {
     // t
@@ -111,26 +205,6 @@ export class GameBase {
   };
 
   _resolves: Function[] = [];
-
-  subscribe = (callback: Function) => {
-    if (this.observable) {
-      const subscription = this.observable.subscribe(() => {
-        callback();
-      });
-      return () => {
-        subscription.unsubscribe();
-      };
-      // this.observable
-    }
-    return () => {};
-
-    // this.observable.subscribe(callback
-
-    // this._resolves.push(callback);
-    // return () => {
-    //   this._resolves = this._resolves.filter((e) => e !== callback);
-    // };
-  };
 
   queue: any[] = [];
 
