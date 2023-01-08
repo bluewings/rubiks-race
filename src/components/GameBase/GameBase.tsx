@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import styles from './GameBase.module.scss';
 import Tile from '../Tile';
 import { RubiksRace } from '../../lib/RubiksRace';
+import { Direction } from '../../lib/constants';
 
 interface IGameBaseProps {
   /**
@@ -87,8 +88,49 @@ function GameBase(props: IGameBaseProps) {
     // game.setReady();
   };
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // console.log(event);
+      let direction: Direction | undefined;
+
+      switch (event.key) {
+        case 'Down': // IE/Edge specific value
+        case 'ArrowDown':
+          direction = Direction.Down;
+          // Do something for "down arrow" key press.
+          break;
+        case 'Up': // IE/Edge specific value
+        case 'ArrowUp':
+          direction = Direction.Up;
+          // Do something for "up arrow" key press.
+          break;
+        case 'Left': // IE/Edge specific value
+        case 'ArrowLeft':
+          direction = Direction.Left;
+          // Do something for "left arrow" key press.
+          break;
+        case 'Right': // IE/Edge specific value
+        case 'ArrowRight':
+          direction = Direction.Right;
+          // Do something for "right arrow" key press.
+          break;
+      }
+      if (direction) {
+        // console.log(direction);
+        game.gameBase.move(direction);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [game]);
+
   return (
     <div className={styles.root}>
+      {/* <input onKey/> */}
       <h4>{tick}</h4>
       <button onClick={handleShuffleClick}>shuffle</button>
       <div style={{ position: 'relative' }}>

@@ -164,9 +164,38 @@ export class GameBase {
     // });
   };
 
+  move = async (direction: Direction) => {
+    const empty = this.emptySpace();
+    if (empty) {
+      let { x, y } = empty;
+      if (direction === Direction.Down) {
+        y--;
+      } else if (direction === Direction.Up) {
+        y++;
+      } else if (direction === Direction.Left) {
+        x++;
+      } else if (direction === Direction.Right) {
+        x--;
+      }
+
+      await this.canMove(x, y);
+
+      // console.
+      // if ()
+      // console.log(direction, sss);
+    }
+  };
+
   canMove = async (x: number, y: number) => {
     // alert(`${x} / ${y} / ${this.toIndex(x, y)}`);
     // const index = this.toIndex(x, y);
+    const known = this.spaces.find((e) => {
+      return e.x === x && e.y === y;
+    });
+    if (!known) {
+      return;
+    }
+
     const found = this.spaces.find((e) => {
       // console.log(Math.floor(e.y / 5), y);
       if ((e.y === y || e.x === x) && !e.tile) {
@@ -174,6 +203,7 @@ export class GameBase {
       }
       return false;
     });
+    // console.log(found);
     if (found) {
       const getRange = (y: number, n2: number) => {
         const min = Math.min(y, n2);

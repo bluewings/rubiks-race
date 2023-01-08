@@ -13,4 +13,8 @@ export enum Color {
 export enum Direction {
   Vertical = 'VERTICAL',
   Horizontal = 'HORIZONTAL',
+  Down = 'DOWN',
+  Up = 'UP',
+  Left = 'LEFT',
+  Right = 'RIGHT',
 }
