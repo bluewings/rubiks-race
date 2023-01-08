@@ -38,6 +38,10 @@ export class RubiksRace {
 
   private random: () => number;
 
+  scramble = async () => {
+    this.scrambler.shuffle();
+  };
+
   shuffle = async () => {
     const ntimes = this.numberOfRows * this.numberOfColumns * 3;
 

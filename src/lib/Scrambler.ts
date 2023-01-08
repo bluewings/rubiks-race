@@ -31,6 +31,7 @@ export class Scrambler {
   // tiles: Tile[];
   // gameBase: GameBase;
   private random: () => number;
+
   constructor({ seed }: RubiksRaceOptions) {
     this.random = seedrandom(seed);
 
@@ -59,7 +60,7 @@ export class Scrambler {
     this.spaces = new Array(numberOfRows * numberOfColumns).fill(true).map((_, i) => {
       // return null;
       const y = Math.floor(i / numberOfColumns);
-      const x = i % numberOfColumns;
+      const x: number = i % numberOfColumns;
 
       return {
         y,
@@ -79,6 +80,31 @@ export class Scrambler {
     //   tiles: this.tiles,
     // });
   }
+
+  shuffle = async () => {
+    const shuffle = (arr: any[], random: () => number) => {
+      return arr
+        .map((tile) => ({ tile, _: random() }))
+        .sort(({ _: a }, { _: b }) => a - b)
+        .map(({ tile }) => tile);
+    };
+
+    const colors = shuffle(
+      Object.values(Color)
+        .map((e) => {
+          return Array(4).fill(e);
+        })
+        .flat(),
+      this.random,
+    );
+
+    this.spaces = this.spaces.map((e) => {
+      return {
+        ...e,
+        color: colors.shift(),
+      };
+    });
+  };
 
   // private random: () => number;
 

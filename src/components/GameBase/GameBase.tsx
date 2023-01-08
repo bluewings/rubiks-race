@@ -88,6 +88,10 @@ function GameBase(props: IGameBaseProps) {
     };
   }, [game.gameBase]);
 
+  const handleScrambleClick = () => {
+    game.scramble();
+  };
+
   const handleShuffleClick = () => {
     // console.log()
     game.shuffle();
@@ -136,6 +140,8 @@ function GameBase(props: IGameBaseProps) {
 
   return (
     <div className={styles.root}>
+      <button onClick={handleScrambleClick}>shuffle</button>
+      <hr />
       {/* <input onKey/> */}
       <Scrambler spaces={game.scrambler.spaces} />
       {/* <h4>{tick}</h4> */}
