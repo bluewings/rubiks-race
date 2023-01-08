@@ -1,10 +1,8 @@
-import { Direction } from './constants';
-import { Tile } from './Tile';
 import { range, Observable, from } from 'rxjs';
 
 export class Observer {
   private observables: any[] = [];
-  protected observer = (type: string, payload: any) => {
+  protected publish = (type: string, payload: any) => {
     this.observables.forEach((observer) => {
       observer.next({ type, payload });
     });

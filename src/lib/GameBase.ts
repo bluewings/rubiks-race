@@ -1,6 +1,5 @@
 import { Direction } from './constants';
 import { Tile } from './Tile';
-import { range, Observable, from } from 'rxjs';
 import { Observer } from './Observer';
 
 interface GameBaseOptions {
@@ -252,7 +251,7 @@ export class GameBase extends Observer {
       this.spaces[fromIndex].tile = undefined;
     }
     this.syncPosition();
-    this.observer('change', {});
+    this.publish('change', {});
     // this._resolves.forEach((e) => e());
 
     // ob
