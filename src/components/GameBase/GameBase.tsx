@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import styles from './GameBase.module.scss';
 import Tile from '../Tile';
-import { Game } from '../../lib/Game';
+import { RubiksRace } from '../../lib/RubiksRace';
 
 interface IGameBaseProps {
   /**
@@ -38,7 +38,7 @@ interface IGameBaseProps {
 function GameBase(props: IGameBaseProps) {
   const game = useMemo(
     () =>
-      new Game({
+      new RubiksRace({
         numberOfColumns: 5,
         numberOfRows: 5,
       }),
@@ -51,7 +51,7 @@ function GameBase(props: IGameBaseProps) {
   });
 
   // game.gameBase.
-  const handleClick = (x: number, y: number) => {
+  const handleTileClick = (x: number, y: number) => {
     // alert
     game.gameBase.canMove(x, y);
   };
@@ -81,22 +81,22 @@ function GameBase(props: IGameBaseProps) {
     };
   }, [game.gameBase]);
 
-  const handleClick2 = () => {
+  const handleShuffleClick = () => {
     // console.log()
-    game.shuffleAlt();
+    game.shuffle();
     // game.setReady();
   };
 
   return (
     <div className={styles.root}>
       <h4>{tick}</h4>
-      <button onClick={handleClick2}>shuffle</button>
+      <button onClick={handleShuffleClick}>shuffle</button>
       <div style={{ position: 'relative' }}>
-        {game.tiles.map((e) => {
-          return <Tile {...e} onClick={handleClick} />;
-        })}
+        {game.tiles.map(({ id, color, x, y }) => (
+          <Tile key={id} x={x} y={y} color={color} onClick={handleTileClick} />
+        ))}
       </div>
-      <pre>{JSON.stringify(game, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(game, null, 2)}</pre> */}
       {/* {tiles.map((e, i) => {
         return <Tile key={i} color={e.color} />;
       })} */}

@@ -1,50 +1,13 @@
-// var seedrandom = require('seedrandom');
-import { format } from 'path';
-import seedrandom from 'seedrandom';
+import { Direction } from './constants';
+import { Tile } from './Tile';
 
-export enum Color {
-  White = 'WHITE',
-  Yellow = 'YELLOW',
-  Orange = 'ORANGE',
-  Red = 'RED',
-  Green = 'GREEN',
-  Blue = 'BLUE',
-}
-
-enum Direction {
-  Vertical = 'VERTICAL',
-  Horizontal = 'HORIZONTAL',
-}
-
-const colors = Object.values(Color);
-
-const NUMBER_OF_ROWS = 5;
-const NUMBER_OF_COLUMNS = 5;
-
-export class Tile {
-  // key: string;
-  color: Color;
-  x?: number;
-  y?: number;
-
-  constructor({ color }: { color: Color }) {
-    // this.key = rng().toString(36).slice(-8);
-    this.color = color;
-  }
-
-  setPosition = (x: number, y: number) => {
-    this.x = x;
-    this.y = y;
-  };
-}
-
-interface GameBaseOptions2 {
-  numberOfRows: number;
+interface GameBaseOptions {
   numberOfColumns: number;
+  numberOfRows: number;
   tiles: Tile[];
 }
 
-class GameBase {
+export class GameBase {
   spaces: {
     x: number;
     y: number;
@@ -56,7 +19,7 @@ class GameBase {
   numberOfRows: number;
   numberOfColumns: number;
 
-  constructor({ numberOfRows, numberOfColumns, tiles }: GameBaseOptions2) {
+  constructor({ numberOfRows, numberOfColumns, tiles }: GameBaseOptions) {
     this.numberOfRows = numberOfRows;
     this.numberOfColumns = numberOfColumns;
     const _tiles = tiles.slice();
@@ -290,140 +253,3 @@ class GameBase {
 
   // putTile()
 }
-
-interface GameBaseOptions {
-  numberOfColumns: number;
-  numberOfRows: number;
-}
-
-const wait = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, 100);
-  });
-};
-
-class Game {
-  tiles: Tile[];
-  gameBase: GameBase;
-
-  setReady = async () => {
-    let empty = this.gameBase.emptySpace();
-    console.log(empty);
-
-    // if (emp)
-
-    if (empty && empty.y !== this.numberOfRows - 1) {
-      console.log(empty?.y, this.numberOfRows - 1);
-      await this.gameBase.canMove(empty?.x, this.numberOfRows - 1);
-    }
-    empty = this.gameBase.emptySpace();
-    // await wait();
-    if (empty && empty.x !== this.numberOfColumns - 1) {
-      // console.log(empty?.x, this.numberOfColumns - 1);
-      await this.gameBase.canMove(this.numberOfColumns - 1, this.numberOfRows - 1);
-    }
-    // empty
-    // const movables = (this.gameBase.getMovable(Direction.Vertical))
-    // ?.find()
-    // console.log(movables);
-    // if
-  };
-
-  shuffleAlt = async (seed = '') => {
-    // console.log('shuffle alt');
-
-    const ntimes = this.numberOfRows * this.numberOfColumns * 3;
-
-    let direction = Direction.Vertical;
-    // const rng = seedrandom(seed);
-
-    // Array[Sy
-    for (let i = 0; i < ntimes; i++) {
-      direction = direction === Direction.Vertical ? Direction.Horizontal : Direction.Vertical;
-      const movables = this.gameBase.getMovable(direction);
-      if (movables) {
-        let pickOne = movables[Math.floor(this.rnd() * movables.length)];
-
-        // if (i + 3 > ntimes &&
-        //   movables[]
-        //   ) {
-        //   // console.log('last two');
-        //   //
-        //   // console.log(movables);
-        //   // if ()
-
-        //   // pickOne = movables.pop();
-        // } else {
-        //   pickOne = movables[Math.floor(this.rnd() * movables.length)];
-        // }
-        if (pickOne) {
-          await this.gameBase.canMove(pickOne.x, pickOne.y);
-        }
-
-        // await wait();
-        // // this.gameBase
-        // console.log('pickOne', pickOne);
-        // console.log(movables);
-        // } else {
-        //   console.log('no movables');
-      }
-
-      // );
-    }
-    await this.setReady();
-
-    // this.gameBase.
-  };
-
-  shuffle = (seed = '') => {
-    const rng = seedrandom(seed);
-
-    this.tiles = this.tiles
-      .map((e) => {
-        return {
-          key: rng(),
-          tile: e,
-        };
-      })
-      .sort((a, b) => {
-        return a.key === b.key ? 0 : a.key < b.key ? -1 : 1;
-      })
-      .map(({ tile }) => tile);
-  };
-  numberOfColumns: number;
-  numberOfRows: number;
-
-  // rnd:
-
-  rnd: () => number;
-
-  constructor(options?: GameBaseOptions) {
-    this.numberOfRows = options?.numberOfRows || NUMBER_OF_ROWS;
-    this.numberOfColumns = options?.numberOfColumns || NUMBER_OF_COLUMNS;
-
-    this.rnd = seedrandom('');
-    // rng();
-
-    this.tiles = new Array(this.numberOfRows * this.numberOfColumns - 1).fill(true).map(
-      (_, i) =>
-        new Tile({
-          color: colors[i % colors.length],
-        }),
-    );
-
-    this.gameBase = new GameBase({
-      numberOfRows: this.numberOfRows,
-      numberOfColumns: this.numberOfColumns,
-      tiles: this.tiles,
-    });
-  }
-
-  // thils
-  setup = () => {
-    // this.
-  };
-}
-
-export { Game };

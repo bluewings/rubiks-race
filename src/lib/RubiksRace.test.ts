@@ -1,7 +1,8 @@
-import { Game, Color } from './Game';
+import { RubiksRace } from './RubiksRace';
+import { Color } from './constants';
 
 test('game setup', () => {
-  const game = new Game();
+  const game = new RubiksRace();
 
   // 전체 타일의 개수는 24개
   expect(game.tiles.length).toBe(24);

@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Tile.module.scss';
-import { Tile as TileClass, Color } from '../../lib/Game';
+// import { Tile as TileClass } from '../../lib/GameBase';
+import { Color } from '../../lib/constants';
 // import { isAnyArrayBuffer } from 'util/types';
 // import
 
