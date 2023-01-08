@@ -164,7 +164,7 @@ export class GameBase {
     // });
   };
 
-  move = async (direction: Direction) => {
+  moveTo = async (direction: Direction) => {
     const empty = this.emptySpace();
     if (empty) {
       let { x, y } = empty;
@@ -177,16 +177,11 @@ export class GameBase {
       } else if (direction === Direction.Right) {
         x--;
       }
-
-      await this.canMove(x, y);
-
-      // console.
-      // if ()
-      // console.log(direction, sss);
+      await this.moveFrom(x, y);
     }
   };
 
-  canMove = async (x: number, y: number) => {
+  moveFrom = async (x: number, y: number) => {
     // alert(`${x} / ${y} / ${this.toIndex(x, y)}`);
     // const index = this.toIndex(x, y);
     const known = this.spaces.find((e) => {

@@ -54,7 +54,7 @@ function GameBase(props: IGameBaseProps) {
   // game.gameBase.
   const handleTileClick = (x: number, y: number) => {
     // alert
-    game.gameBase.canMove(x, y);
+    game.gameBase.moveFrom(x, y);
   };
 
   const [tick, setTick] = useState(0);
@@ -117,7 +117,7 @@ function GameBase(props: IGameBaseProps) {
       }
       if (direction) {
         // console.log(direction);
-        game.gameBase.move(direction);
+        game.gameBase.moveTo(direction);
       }
     };
 

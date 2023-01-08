@@ -42,7 +42,7 @@ export class RubiksRace {
       if (movables) {
         let pickOne = movables[Math.floor(this.random() * movables.length)];
         if (pickOne) {
-          await this.gameBase.canMove(pickOne.x, pickOne.y);
+          await this.gameBase.moveFrom(pickOne.x, pickOne.y);
         }
       }
     }
@@ -55,12 +55,12 @@ export class RubiksRace {
 
     if (empty && empty.y !== this.numberOfRows - 1) {
       console.log(empty?.y, this.numberOfRows - 1);
-      await this.gameBase.canMove(empty?.x, this.numberOfRows - 1);
+      await this.gameBase.moveFrom(empty?.x, this.numberOfRows - 1);
     }
     empty = this.gameBase.emptySpace();
     if (empty && empty.x !== this.numberOfColumns - 1) {
       // console.log(empty?.x, this.numberOfColumns - 1);
-      await this.gameBase.canMove(this.numberOfColumns - 1, this.numberOfRows - 1);
+      await this.gameBase.moveFrom(this.numberOfColumns - 1, this.numberOfRows - 1);
     }
   };
 }
