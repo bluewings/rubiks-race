@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Scrambler.module.scss';
 import { Color } from '../../lib/constants';
+import { Scrambler as ScramblerClass } from '../../lib/Scrambler';
 
 const colors = {
   // [Color.White]: `rgb(255, 255, 255)	`,
@@ -19,6 +20,7 @@ const colors = {
 };
 
 interface IScramblerProps {
+  scrambler: ScramblerClass;
   /**
    * Prop Description
    */
@@ -34,10 +36,25 @@ interface IScramblerProps {
  * Component Description
  */
 function Scrambler(props: IScramblerProps) {
-  const { spaces } = props;
+  const { scrambler } = props;
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    // game.subs
+    const unsubscribe = scrambler.subscribe(() => {
+      setTick((tick) => tick + 1);
+    });
+    // game.shuffleAlt();
+    // setTimeout(() => {
+
+    // }, 100)
+    return () => {
+      unsubscribe();
+    };
+  }, [scrambler]);
+
   return (
     <div className={styles.root}>
-      {spaces.map((e, i) => {
+      {scrambler.spaces.map((e, i) => {
         const { x, y } = e;
         return (
           <div

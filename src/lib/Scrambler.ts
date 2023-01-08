@@ -1,6 +1,7 @@
 import seedrandom from 'seedrandom';
 import { NUMBER_OF_ROWS, NUMBER_OF_COLUMNS, Direction, Color } from './constants';
 import { Tile, getTiles } from './Tile';
+import { Observer } from './Observer';
 // import { GameBase, } from './GameBase';
 
 // interface RubiksRaceOptions {
@@ -20,7 +21,7 @@ interface RubiksRaceOptions {
   seed: string;
 }
 
-export class Scrambler {
+export class Scrambler extends Observer {
   spaces: {
     x: number;
     y: number;
@@ -33,6 +34,7 @@ export class Scrambler {
   private random: () => number;
 
   constructor({ seed }: RubiksRaceOptions) {
+    super();
     this.random = seedrandom(seed);
 
     const shuffle = (arr: any[], random: () => number) => {
@@ -104,6 +106,8 @@ export class Scrambler {
         color: colors.shift(),
       };
     });
+
+    this.publish('change', {});
   };
 
   // private random: () => number;
