@@ -8,106 +8,18 @@ interface GameBaseOptions {
   tiles: Tile[];
 }
 
-// class Observ {
-//   private observables: any[] = [];
-//   protected observer = (type: string, payload: any) => {
-//     this.observables.forEach((observer) => {
-//       observer.next({ type, payload });
-//     });
-//   };
+export enum Event {
+  MoveStart = 'MOVE_START',
+  Move = 'MOVE',
+  MoveEnd = 'MOVE_END',
+}
 
-//   constructor() {
-//     // console.log();
-
-//     this.observable = new Observable((subscriber) => {
-//       this.observables.push(subscriber);
-//       return () => {
-//         const index = this.observables.indexOf(subscriber);
-//         if (index !== -1) {
-//           this.observables.splice(index, 1);
-//         }
-//       };
-//     });
-//   }
-
-//   private observable?: Observable<any>;
-
-//   public subscribe = (callback: Function) => {
-//     if (this.observable) {
-//       const subscription = this.observable.subscribe(() => {
-//         callback();
-//       });
-//       return () => {
-//         subscription.unsubscribe();
-//       };
-//       // this.observable
-//     }
-//     return () => {};
-
-//     // this.observable.subscribe(callback
-
-//     // this._resolves.push(callback);
-//     // return () => {
-//     //   this._resolves = this._resolves.filter((e) => e !== callback);
-//     // };
-//   };
-
-//   // initStream = () => {
-//   //   // const observables = [];
-//   //   // this.observer = (type, payload) => {
-//   //   //   observables.forEach((observer) => { observer.next({ type, payload }); });
-//   //   // };
-
-//   //   this.observable = new Observable((subscriber) => {
-//   //     this.observables.push(subscriber);
-//   //     return () => {
-//   //       const index = this.observables.indexOf(subscriber);
-//   //       if (index !== -1) {
-//   //         this.observables.splice(index, 1);
-//   //       }
-//   //     };
-//   //   });
-
-//   //   // from()
-
-//   //   // setTimeout(() => {
-//   //   //   this.observer('test', { greet: 'wow' });
-//   //   // }, 2000);
-
-//   //   // this.observable.subscribe((e) => {
-//   //   //   console.log(this.observables.length);
-//   //   //   console.log('subscribe', e);
-//   //   // });
-//   //   // const observable = new Observable((subscriber) => {
-//   //   //   subscriber.next(1);
-//   //   //   subscriber.next(2);
-//   //   //   subscriber.next(3);
-//   //   //   setTimeout(() => {
-//   //   //     subscriber.next(4);
-//   //   //     subscriber.complete();
-//   //   //   }, 1000);
-//   //   // });
-//   //   // Observable.
-//   //   // const stream =       Observable.create((observer) => {
-//   //   //   observables.push(observer);
-//   //   //   return () => {
-//   //   //     const index = observables.indexOf(observer);
-//   //   //     if (index > -1) {
-//   //   //       observables.splice(index, 1);
-//   //   //     }
-//   //   //   };
-//   //   // }),
-//   // };
-// }
-
-export class GameBase extends Observer {
+export class GameBase extends Observer<Event> {
   spaces: {
     x: number;
     y: number;
     tile?: Tile;
   }[];
-
-  spaces_?: Record<string, any>;
 
   numberOfRows: number;
   numberOfColumns: number;
@@ -129,7 +41,6 @@ export class GameBase extends Observer {
     });
 
     this.syncPosition();
-    // this.initStream();
   }
 
   // observables: any[] = [];
@@ -237,10 +148,6 @@ export class GameBase extends Observer {
     // }
   };
 
-  // push = ({ x, y }: { x: number; y: number }) => {
-
-  // };
-
   _move = (from: { x: number; y: number }, to: { x: number; y: number }) => {
     const fromIndex = this.toIndex(from.x, from.y);
     const toIndex = this.toIndex(to.x, to.y);
@@ -251,10 +158,7 @@ export class GameBase extends Observer {
       this.spaces[fromIndex].tile = undefined;
     }
     this.syncPosition();
-    this.publish('change', {});
-    // this._resolves.forEach((e) => e());
-
-    // ob
+    this.publish(Event.Move, {});
   };
 
   emptySpace = () => {
@@ -266,8 +170,6 @@ export class GameBase extends Observer {
   getMovable = (direction: Direction) => {
     const empty = this.emptySpace();
     if (empty) {
-      // console.log(empty);
-
       const moves =
         direction === Direction.Vertical
           ? this.spaces.filter((e) => {
@@ -276,39 +178,9 @@ export class GameBase extends Observer {
           : this.spaces.filter((e) => {
               return e.tile && e.y === empty.y;
             });
-      // .map((e) => {
-      //   return {
-      //     from: {
-      //       x: e.x,
-      //       y: e.y,
-      //     },
-      //     to: {
-      //       x: empty.x,
-      //       y: empty.y,
-      //     },
-      //   };
-      // });
-      // moves
 
       return moves;
-      // if (direction === Direction.Vertical) {
-      //   return this.spaces.filter((e) => {
-      //     return e.tile && e.x === empty.x;
-      //   });
-      // } else {
-      //   return this.spaces.filter((e) => {
-      //     return e.tile && e.y === empty.y;
-      //   });
-      // }
     }
-    // empty.x
-    // const this.spaces.find((e) => {
-    //   // console.log(Math.floor(e.y / 5), y);
-    //   if (e.tile) {
-    //     return true;
-    //   }
-    //   return false;
-    // });
   };
 
   moveTo = async (direction: Direction) => {
@@ -326,11 +198,13 @@ export class GameBase extends Observer {
       }
       await this.moveFrom(x, y);
     }
+    // this.publish('moveS')
   };
 
   moveFrom = async (x: number, y: number) => {
     // alert(`${x} / ${y} / ${this.toIndex(x, y)}`);
     // const index = this.toIndex(x, y);
+
     const known = this.spaces.find((e) => {
       return e.x === x && e.y === y;
     });
@@ -347,6 +221,7 @@ export class GameBase extends Observer {
     });
     // console.log(found);
     if (found) {
+      this.publish(Event.MoveStart, {});
       const getRange = (y: number, n2: number) => {
         const min = Math.min(y, n2);
         const max = Math.max(y, n2);
@@ -408,20 +283,7 @@ export class GameBase extends Observer {
       this.flush();
 
       await Promise.all(all);
-
-      // _resolves();
-      // {y: 4, x: 4, tile: undefined} {x: 4, y: 1}
+      this.publish(Event.MoveEnd, {});
     }
-
-    // if ()
-
-    // console.log('')
-    // if (this.spaces)
-    // 가로
-    // const
-    // if (this.space)
-    // this.space
   };
-
-  // putTile()
 }

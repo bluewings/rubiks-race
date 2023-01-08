@@ -21,8 +21,14 @@ interface RubiksRaceOptions {
   seed: string;
 }
 
-export class Scrambler extends Observer {
-  spaces: {
+export enum Event {
+  // MoveStart = 'MOVE_START',
+  // Move = 'MOVE',
+  Scramble = 'Scramble',
+}
+
+export class Scrambler extends Observer<Event> {
+  patterns: {
     x: number;
     y: number;
     color: Color;
@@ -59,7 +65,7 @@ export class Scrambler extends Observer {
 
     // .array()
 
-    this.spaces = new Array(numberOfRows * numberOfColumns).fill(true).map((_, i) => {
+    this.patterns = new Array(numberOfRows * numberOfColumns).fill(true).map((_, i) => {
       // return null;
       const y = Math.floor(i / numberOfColumns);
       const x: number = i % numberOfColumns;
@@ -100,7 +106,7 @@ export class Scrambler extends Observer {
       this.random,
     );
 
-    this.spaces = this.spaces.map((e) => {
+    this.patterns = this.patterns.map((e) => {
       return {
         ...e,
         color: colors.shift(),

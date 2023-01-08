@@ -153,7 +153,7 @@ function GameBase(props: IGameBaseProps) {
       <button onClick={handleScrambleClick}>shuffle</button>
       <hr />
       {/* <input onKey/> */}
-      <Scrambler scrambler={game.scrambler} spaces={game.scrambler.spaces} />
+      <Scrambler scrambler={game.scrambler} />
       {/* <h4>{tick}</h4> */}
       <hr />
       <button onClick={handleShuffleClick}>shuffle</button>

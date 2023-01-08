@@ -21,15 +21,6 @@ const colors = {
 
 interface IScramblerProps {
   scrambler: ScramblerClass;
-  /**
-   * Prop Description
-   */
-  // message?: string;
-  spaces: {
-    x: number;
-    y: number;
-    color: Color;
-  }[];
 }
 
 /**
@@ -54,10 +45,11 @@ function Scrambler(props: IScramblerProps) {
 
   return (
     <div className={styles.root}>
-      {scrambler.spaces.map((e, i) => {
+      {scrambler.patterns.map((e, i) => {
         const { x, y } = e;
         return (
           <div
+            key={i}
             className={styles.cube}
             style={{
               top: x * 20,

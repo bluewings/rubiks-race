@@ -1,6 +1,7 @@
+import { any } from 'prop-types';
 import { range, Observable, from } from 'rxjs';
 
-export class Observer {
+export class Observer<T extends any> {
   private observables: any[] = [];
   protected publish = (type: string, payload: any) => {
     this.observables.forEach((observer) => {
@@ -24,10 +25,39 @@ export class Observer {
 
   private observable?: Observable<any>;
 
-  public subscribe = (callback: Function) => {
-    if (this.observable) {
-      const subscription = this.observable.subscribe(() => {
-        callback();
+  // public subscribe2(name: string);
+  // public subscribe2(name: string, skill: string);
+
+  // subscribe2 = (name: string)
+  // public subscribe = (type: T, callback: Function),
+
+  // class ContactModel {
+  //   public subscribe(callback: string): any;
+  //   public subscribe(customerId: number, type: string): any;
+  //   public subscribe(typeOrCustomerId: string|number, type?: string): any {
+  //     return;
+  //   }
+  // }
+
+  public subscribe(callback: Function): () => void;
+  public subscribe(type: T, callback: Function): () => void;
+  public subscribe(__type: T | Function, __callback?: Function): () => void {
+    let _type: any = '';
+    let _callback: Function = () => undefined;
+    if (typeof __type === 'function') {
+      _callback = __type;
+    } else if (typeof __callback === 'function') {
+      _type = __type;
+      _callback = __callback;
+    }
+
+    if (this.observable && _callback) {
+      const subscription = this.observable.subscribe((observer) => {
+        if (!_type || observer.type === _type) {
+          _callback(observer);
+        }
+        // observer.type
+        // console.log('observer', observer);
       });
       return () => {
         subscription.unsubscribe();
@@ -42,7 +72,7 @@ export class Observer {
     // return () => {
     //   this._resolves = this._resolves.filter((e) => e !== callback);
     // };
-  };
+  }
 
   // initStream = () => {
   //   // const observables = [];

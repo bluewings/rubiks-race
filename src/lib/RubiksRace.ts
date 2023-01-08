@@ -1,8 +1,11 @@
 import seedrandom from 'seedrandom';
 import { NUMBER_OF_ROWS, NUMBER_OF_COLUMNS, Direction } from './constants';
 import { Tile, getTiles } from './Tile';
-import { GameBase } from './GameBase';
-import { Scrambler } from './Scrambler';
+import { GameBase, Event as GameBaseEvent } from './GameBase';
+import { Scrambler, Event as ScrambleEvent } from './Scrambler';
+import { Observer } from './Observer';
+// import
+import { range, Observable, from, merge } from 'rxjs';
 
 interface RubiksRaceOptions {
   numberOfColumns: number;
@@ -10,7 +13,12 @@ interface RubiksRaceOptions {
   seed?: string;
 }
 
-export class RubiksRace {
+export enum Event {}
+// MoveStart = 'MOVE_START',
+// Move = 'MOVE',
+// MoveEnd = 'MOVE_END',
+
+export class RubiksRace extends Observer<Event> {
   numberOfRows: number;
   numberOfColumns: number;
   tiles: Tile[];
@@ -18,6 +26,7 @@ export class RubiksRace {
   scrambler: Scrambler;
 
   constructor(options?: RubiksRaceOptions) {
+    super();
     this.numberOfRows = options?.numberOfRows || NUMBER_OF_ROWS;
     this.numberOfColumns = options?.numberOfColumns || NUMBER_OF_COLUMNS;
 
@@ -34,6 +43,20 @@ export class RubiksRace {
     });
 
     this.scrambler = new Scrambler({ seed });
+
+    // this.subscribe('')
+
+    // merge()
+    // console.log()
+    // const checkResult
+    const handleCheck = (data: any) => {
+      console.log('check!!!', data);
+      // handleCheck
+    };
+
+    // this.gameBase.subscribe(GameBaseEvent.MoveEnd, handleCheck);
+    this.gameBase.subscribe(GameBaseEvent.MoveEnd, handleCheck);
+    this.scrambler.subscribe(ScrambleEvent.Scramble, handleCheck);
   }
 
   private random: () => number;
