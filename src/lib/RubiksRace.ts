@@ -2,6 +2,7 @@ import seedrandom from 'seedrandom';
 import { NUMBER_OF_ROWS, NUMBER_OF_COLUMNS, Direction } from './constants';
 import { Tile, getTiles } from './Tile';
 import { GameBase } from './GameBase';
+import { Scrambler } from './Scrambler';
 
 interface RubiksRaceOptions {
   numberOfColumns: number;
@@ -14,6 +15,7 @@ export class RubiksRace {
   numberOfColumns: number;
   tiles: Tile[];
   gameBase: GameBase;
+  scrambler: Scrambler;
 
   constructor(options?: RubiksRaceOptions) {
     this.numberOfRows = options?.numberOfRows || NUMBER_OF_ROWS;
@@ -28,6 +30,8 @@ export class RubiksRace {
       numberOfColumns: this.numberOfColumns,
       tiles: this.tiles,
     });
+
+    this.scrambler = new Scrambler();
   }
 
   private random: () => number;

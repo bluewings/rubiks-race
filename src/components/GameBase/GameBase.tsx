@@ -57,6 +57,11 @@ function GameBase(props: IGameBaseProps) {
     game.gameBase.moveFrom(x, y);
   };
 
+  // const handleTileClick = (x: number, y: number) => {
+  //   // alert
+  //   game.gameBase.moveFrom(x, y);
+  // };
+
   const [tick, setTick] = useState(0);
 
   // useEffect(() => {
@@ -135,7 +140,7 @@ function GameBase(props: IGameBaseProps) {
       <button onClick={handleShuffleClick}>shuffle</button>
       <div style={{ position: 'relative' }}>
         {game.tiles.map(({ id, color, x, y }) => (
-          <Tile key={id} x={x} y={y} color={color} onClick={handleTileClick} />
+          <Tile key={id} x={x} y={y} color={color} onPress={handleTileClick} />
         ))}
       </div>
       {/* <pre>{JSON.stringify(game, null, 2)}</pre> */}

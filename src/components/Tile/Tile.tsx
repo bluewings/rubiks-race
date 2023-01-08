@@ -38,7 +38,7 @@ interface TileProps {
   color: Color;
   x?: number;
   y?: number;
-  onClick: Function;
+  onPress: (x: number, y: number) => any;
   // x÷
 }
 
@@ -46,7 +46,8 @@ interface TileProps {
  * Component Description
  */
 function Tile(props: TileProps) {
-  if (typeof props.x === 'number' && typeof props.y === 'number') {
+  const { x, y } = props;
+  if (typeof x === 'number' && typeof y === 'number') {
     // const handleClick = () => {
     //   alert(`${props.x} ${props.y}`);
     // };
@@ -56,12 +57,15 @@ function Tile(props: TileProps) {
         style={{
           backgroundColor: colors[props.color],
           borderColor: colors[props.color],
-          top: props.y * 55,
-          left: props.x * 55,
+          top: y * 55,
+          left: x * 55,
         }}
-        onClick={() => {
-          props.onClick(props.x, props.y);
+        onPointerDown={() => {
+          props.onPress(x, y);
         }}
+        // onClick={() => {
+        //   props.onPress(x, y);
+        // }}
       >
         {/* <h3>
           {props.x} / {props.y}
