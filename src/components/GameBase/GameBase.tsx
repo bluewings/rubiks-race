@@ -1,9 +1,11 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import styles from './GameBase.module.scss';
 import Tile from '../Tile';
 import { RubiksRace } from '../../lib/RubiksRace';
 import { Direction } from '../../lib/constants';
 import Scrambler from '../Scrambler';
+
+// import Rx from 'rxjs/Rx';
 
 interface IGameBaseProps {
   /**
@@ -33,19 +35,27 @@ interface IGameBaseProps {
 //     const b = _b.sortKey;
 //     return a === b ? 0 : a < b ? -1 : 1;
 //   });
-
+const game = new RubiksRace({
+  numberOfColumns: 5,
+  numberOfRows: 5,
+});
 /**
  * Component Description
  */
 function GameBase(props: IGameBaseProps) {
-  const game = useMemo(
-    () =>
-      new RubiksRace({
-        numberOfColumns: 5,
-        numberOfRows: 5,
-      }),
-    [],
-  );
+  // const game2 = useRef<any>();
+  // if (!game2.current) {
+  //   game2.current = new RubiksRace({
+  //     numberOfColumns: 5,
+  //     numberOfRows: 5,
+  //   });
+  // }
+  // const game2 = useRef(
+  //   () =>
+
+  //   // [],
+  // );
+  // const game = game2.current;
   const [board, setBoard] = useState(() => {
     return new Array(5).fill(true).map((e) => {
       return new Array(5).fill(true);
