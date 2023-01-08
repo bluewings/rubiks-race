@@ -1,0 +1,16 @@
+$size: 45px;
+.root {
+  position: absolute;
+  background: #63e4c1;
+  // padding: 10px;
+  border: 1px solid black;
+
+  width: $size;
+  height: $size;
+  margin: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.75s linear;
+  // display: inline-block;
+}
