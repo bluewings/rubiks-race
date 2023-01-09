@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import { yellow, orange, red, blue, green, grey } from '@ant-design/colors';
 import styles from './Tile.module.scss';
 // import { Tile as TileClass } from '../../lib/GameBase';
 import { Color } from '../../lib/constants';
+import { Tile as TileClass } from '../../lib/Tile';
 
 // https://colorswall.com/palette/171
 // const colors = {
@@ -35,9 +36,10 @@ interface TileProps {
    * Prop Description
    */
   // message?: string;
-  color: Color;
-  x?: number;
-  y?: number;
+  tile: TileClass;
+  // color: Color;
+  // x?: number;
+  // y?: number;
   onPress: (x: number, y: number) => any;
   // x÷
 }
@@ -46,7 +48,19 @@ interface TileProps {
  * Component Description
  */
 function Tile(props: TileProps) {
-  const { x, y } = props;
+  const { tile } = props;
+  const x = tile.x;
+  const y = tile.y;
+  const color = tile.color;
+  const [, setTick] = useState(0);
+
+  useEffect(() => {
+    tile.subscribe(() => {
+      console.log('>>> 1');
+      setTick((tick) => tick + 1);
+    });
+  }, [tile]);
+
   if (typeof x === 'number' && typeof y === 'number') {
     // const handleClick = () => {
     //   alert(`${props.x} ${props.y}`);
@@ -55,8 +69,8 @@ function Tile(props: TileProps) {
       <div
         className={styles.root}
         style={{
-          backgroundColor: colors[props.color],
-          borderColor: colors[props.color],
+          backgroundColor: colors[color],
+          borderColor: colors[color],
           top: y * 55,
           left: x * 55,
         }}

@@ -1,21 +1,32 @@
 import { Color } from './constants';
+import { Observer } from './Observer';
 
 let seq = 0;
 
-export class Tile {
+export enum Event {
+  MoveStart = 'MOVE_START',
+  Move = 'MOVE',
+  MoveEnd = 'MOVE_END',
+}
+
+export class Tile extends Observer<Event> {
   id: string;
   color: Color;
   x?: number;
   y?: number;
 
   constructor({ color }: { color: Color }) {
+    super();
     this.id = `${seq++}`;
     this.color = color;
   }
 
   setPosition = (x: number, y: number) => {
-    this.x = x;
-    this.y = y;
+    if (this.x !== x || this.y !== y) {
+      this.x = x;
+      this.y = y;
+      this.publish(Event.Move, {});
+    }
   };
 }
 

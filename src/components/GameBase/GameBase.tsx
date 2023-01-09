@@ -56,11 +56,11 @@ function GameBase(props: IGameBaseProps) {
   //   // [],
   // );
   // const game = game2.current;
-  const [board, setBoard] = useState(() => {
-    return new Array(5).fill(true).map((e) => {
-      return new Array(5).fill(true);
-    });
-  });
+  // const [board, setBoard] = useState(() => {
+  //   return new Array(5).fill(true).map((e) => {
+  //     return new Array(5).fill(true);
+  //   });
+  // });
 
   // game.gameBase.
   const handleTileClick = (x: number, y: number) => {
@@ -73,7 +73,7 @@ function GameBase(props: IGameBaseProps) {
   //   game.gameBase.moveFrom(x, y);
   // };
 
-  const [tick, setTick] = useState(0);
+  const [, setTick] = useState(0);
 
   // useEffect(() => {
   //   const timer = setInterval(() => {
@@ -84,19 +84,19 @@ function GameBase(props: IGameBaseProps) {
   //   };
   // }, []);
 
-  useEffect(() => {
-    // game.subs
-    const unsubscribe = game.gameBase.subscribe(() => {
-      setTick((tick) => tick + 1);
-    });
-    // game.shuffleAlt();
-    // setTimeout(() => {
+  // useEffect(() => {
+  //   // game.subs
+  //   const unsubscribe = game.gameBase.subscribe(() => {
+  //     setTick((tick) => tick + 1);
+  //   });
+  //   // game.shuffleAlt();
+  //   // setTimeout(() => {
 
-    // }, 100)
-    return () => {
-      unsubscribe();
-    };
-  }, [game.gameBase]);
+  //   // }, 100)
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, [game.gameBase]);
 
   const handleScrambleClick = () => {
     game.scramble();
@@ -159,8 +159,8 @@ function GameBase(props: IGameBaseProps) {
       <button onClick={handleShuffleClick}>shuffle</button>
       <hr />
       <div style={{ position: 'relative' }}>
-        {game.tiles.map(({ id, color, x, y }) => (
-          <Tile key={id} x={x} y={y} color={color} onPress={handleTileClick} />
+        {game.tiles.map((tile) => (
+          <Tile key={tile.id} tile={tile} onPress={handleTileClick} />
         ))}
       </div>
       {/* <pre>{JSON.stringify(game, null, 2)}</pre> */}
